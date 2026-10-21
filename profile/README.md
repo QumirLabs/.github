@@ -1,23 +1,37 @@
-# Qumir Labs
+# QumirLabs
 
-We build open-source tools for writing code and working with data.
+We build open-source compilers and analytical systems that run
+natively and in the browser.
 
-## Qumir
+Our projects share a compiler foundation built on LLVM, with a focus
+on clear architecture, efficient execution, and reusable components.
 
-Write and run Kumir programs on your computer or in your browser.
-Kumir is a language for learning to code. It uses Russian keywords.
+### Qumir — a language and compiler toolkit
 
-[Try Qumir](https://qumir.dev) · [Source code](https://github.com/QumirLabs/qumir) · [Docs in Russian](https://github.com/QumirLabs/qumir/blob/master/docs/ru/index.md)
+A compiler and runtime for the Kumir educational programming language,
+with an embeddable core language for building computational kernels.
 
-## QumirDB
+Qumir supports interpretation, native JIT and ahead-of-time compilation,
+and WebAssembly — through a shared compiler pipeline.
 
-Run SQL queries on Parquet files, on your computer or in your browser.
-QumirDB uses the Qumir compiler to turn queries into code.
+[Source](https://github.com/QumirLabs/qumir) ·
+[Try online](https://qumir.dev)
 
-[Try QumirDB](https://db.qumir.dev) · [Source code](https://github.com/QumirLabs/qumirdb) · [How it works](https://github.com/QumirLabs/qumirdb/blob/master/docs/arch/README.md)
+### QumirDB — compiled SQL analytics
 
-## Questions and bugs
+An analytical SQL engine for Parquet, built on Qumir.
 
-Open an issue in [Qumir](https://github.com/QumirLabs/qumir/issues) or
-[QumirDB](https://github.com/QumirLabs/qumirdb/issues).
-For a bug, include a small example and say what you expected to happen.
+Queries compile to native code or WebAssembly. Custom functions written
+in Rust can be optimized together with the query, bringing domain-specific
+computation into the same compiled pipeline.
+
+[Source](https://github.com/QumirLabs/qumirdb) ·
+[Try online](https://db.qumir.dev)
+
+---
+
+We care about understandable systems, coherent design, and performance
+backed by measurements.
+
+Explore the code, try the playgrounds, or bring a question, bug report,
+or idea to either repository.
