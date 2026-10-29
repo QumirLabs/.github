@@ -10,13 +10,13 @@ by its users. A standalone language needs type checking, code generation, and
 a runtime. Qumir provides these shared parts so a language implementation can
 concentrate on its syntax and meaning.
 
-At its core is **oz-lang**, a typed language that can serve as an intermediate
-language for other languages and for generated computations. It has a textual
-syntax suitable for generating code, and a corresponding AST that applications
-can construct directly through the C++ library. Qumir checks and lowers this
-representation to its own **SSA intermediate representation (IR)** for
-optimization and code generation. oz-lang is also called *core lang* in the
-documentation.
+At its core is **oz-lang**, a typed language that is a textual representation
+of Qumir's shared abstract syntax tree (AST), written as **S-expressions**.
+It can serve as an intermediate language for other languages and for
+generated computations. Applications can generate this text or construct
+the same AST directly through the C++ library. Qumir checks and lowers the
+AST to its own **SSA intermediate representation (IR)** for optimization
+and code generation. oz-lang is also called *core lang* in the documentation.
 
 ### Where Kumir fits
 
