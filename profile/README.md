@@ -60,20 +60,45 @@ runtime integration.
 [Compiler architecture](https://github.com/QumirLabs/qumir/blob/master/docs/arch/overview.md) ·
 [Try Kumir in the browser](https://qumir.dev)
 
-## QumirDB — SQL analytics built with Qumir
+## QumirDB — compiled SQL analytics
 
-QumirDB runs SQL queries over Parquet files. Its query planner generates
-computational kernels using oz-lang and Qumir's compiler pipeline. Those
-kernels compile to native code or WebAssembly, allowing query execution on
-the desktop, on a server, or in a browser.
+QumirDB is a **compiled SQL engine for Parquet**. Use SQL to filter datasets,
+join tables, and compute aggregates on a computer, on a server, or in a
+browser.
 
-For computations beyond built-in SQL functions, QumirDB can compile Rust
-functions together with a query. For example, a query can apply a custom
-scientific formula to Parquet columns and filter or aggregate its results;
-LLVM can optimize the function together with the surrounding query code.
+Instead of interpreting query expressions during data processing, QumirDB
+generates code specialized for each query and compiles it to native machine
+code or WebAssembly. Processing column batches is compatible with either
+execution model; QumirDB's compilation lets LLVM optimize the query's
+expressions and operator computations together.
 
-QumirDB is a concrete example of using Qumir as the compilation layer of an
-application with its own language, planner, and execution model.
+```mermaid
+flowchart TD
+    SQL["SQL query"] --> Parser["SQL parser"]
+    Parser --> AST["SQL AST"]
+    AST --> Plan["Logical plan"]
+    Plan --> Passes["Optimizer passes"]
+    Passes --> Graph["Physical task graph"]
+    Graph --> Kernels["Generated kernels: Qumir AST / oz-lang"]
+    Kernels --> Compiler["Qumir compiler + LLVM"]
+    Compiler --> Code["Native machine code or WebAssembly"]
+    Code --> Execution["Scheduled execution"]
+    Graph -.->|tasks and data exchange| Execution
+    Parquet["Parquet data"] -->|column batches| Execution
+    Execution --> Result["Query results"]
+```
+
+QumirDB handles SQL parsing, logical planning, optimizer passes, the physical
+task graph, and scheduling. It generates computational kernels as Qumir
+ASTs, whose S-expression textual representation is oz-lang. Qumir and LLVM
+compile those kernels; the scheduler runs tasks that read Parquet batches,
+call the compiled kernels, and pass results through the graph.
+
+Custom Rust functions can join the same compilation pipeline. Their LLVM
+bitcode is linked with the query code before optimization, allowing a
+scientific formula or processing rule to be optimized together with the
+SQL that filters or aggregates its results.
 
 [Source](https://github.com/QumirLabs/qumirdb) ·
+[Query pipeline](https://github.com/QumirLabs/qumirdb/blob/master/docs/arch/README.md#query-pipeline) ·
 [Try SQL in the browser](https://db.qumir.dev)
